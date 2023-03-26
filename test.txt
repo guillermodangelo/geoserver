@@ -1,0 +1,1 @@
+docker cp ./test.tif kartozageoserver-geoserver-1:/opt/geoserver/data_dir
