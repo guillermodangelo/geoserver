@@ -13,3 +13,4 @@ scenario_tests/gwc/tests/__pycache__*
 scenario_tests/login/tests/__pycache__*
 scenario_tests/stores/tests/__pycache__*
 raster_data/
+.env
