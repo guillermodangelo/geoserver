@@ -62,41 +62,41 @@ services:
           labels:
             - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
-    nginx-proxy-acme:
-      container_name: acme
-      image: nginxproxy/acme-companion
-      restart: always
-      environment:
-        - DEFAULT_EMAIL=me@guillermodangelo.com
-        - CERTS_UPDATE_INTERVAL=80000
-      volumes:
-        - lecerts:/etc/nginx/certs:rw
-        - levhostd:/etc/nginx/vhost.d
-        - lehtml:/usr/share/nginx/html
-        - /var/run/docker.sock:/var/run/docker.sock:ro
-        - leacme:/etc/acme.sh
-      depends_on:
-        - nginx-proxy
+   nginx-proxy-acme:
+          container_name: acme
+          image: nginxproxy/acme-companion
+          restart: always
+          environment:
+            - DEFAULT_EMAIL=me@guillermodangelo.com
+            - CERTS_UPDATE_INTERVAL=80000
+          volumes:
+            - lecerts:/etc/nginx/certs:rw
+            - levhostd:/etc/nginx/vhost.d
+            - lehtml:/usr/share/nginx/html
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - leacme:/etc/acme.sh
+          depends_on:
+            - nginx-proxy
 
-    nginx:
-      image: nginx
-      volumes:
-        - ./sites-enabled:/etc/nginx/conf.d:ro
-      logging:
-        driver: json-file
-        options:
-          max-size: 200m
-          max-file: '10'
-      depends_on:
-        - geoserver
-        - nginx-proxy
-        - nginx-proxy-acme
-      ports:
-        - "80:80"
-      environment:
-        - VIRTUAL_HOST='guillermodangelo.online','www.guillermodangelo.online'
-        - LETSENCRYPT_HOST='guillermodangelo.online','www.guillermodangelo.online'
-        - LETSENCRYPT_EMAIL=me@guillermodangelo.com
+   nginx:
+          image: nginx
+          volumes:
+            - ./sites-enabled:/etc/nginx/conf.d:ro
+          logging:
+            driver: json-file
+            options:
+              max-size: 200m
+              max-file: '10'
+          depends_on:
+            - geoserver
+            - nginx-proxy
+            - nginx-proxy-acme
+          ports:
+            - "80:80"
+          environment:
+            - VIRTUAL_HOST='guillermodangelo.online','www.guillermodangelo.online'
+            - LETSENCRYPT_HOST='guillermodangelo.online','www.guillermodangelo.online'
+            - LETSENCRYPT_EMAIL=me@guillermodangelo.com
 
 
     # nginx:
